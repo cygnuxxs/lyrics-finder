@@ -14,7 +14,7 @@ const Results: React.FC = () => {
     setQuery(event.target.value);
   };
   const fetchData = () => {
-    fetch(`http://localhost:1155/search?query=${query}`)
+    fetch(`https://lyrics-finder-api-jade.vercel.app/search?query=${query}`)
       .then((response) => response.json())
       .then((data) => setSongs(data))
       .catch((err) => console.error(err));

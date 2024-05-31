@@ -15,7 +15,7 @@ const LyricDialog: React.FC<{ props: SongProps }> = ({ props }) => {
 
   const fetchLyrics = () => {
     if (!lyrics) {
-      fetch("http://localhost:1155/lyrics", {
+      fetch("https://lyrics-finder-api-jade.vercel.app/lyrics", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
