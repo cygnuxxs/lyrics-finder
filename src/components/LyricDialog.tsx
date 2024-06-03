@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,19 +13,23 @@ import TextEffect from "@/components/TextEffect";
 const LyricDialog: React.FC<{ props: SongProps }> = ({ props }) => {
   const [lyrics, setLyrics] = useState<string>("");
 
+  useEffect(() => {
+    setLyrics("");
+  }, [props.url]);
+
   const fetchLyrics = () => {
-    if (!lyrics) {
-      fetch("https://lyrics-finder-api-jade.vercel.app/lyrics", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: props.url }),
+    fetch("https://lyrics-finder-api-jade.vercel.app/lyrics", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url: props.url }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLyrics(data);
       })
-        .then((response) => response.json())
-        .then((data) => setLyrics(data))
-        .catch((err) => console.error(err));
-    }
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -47,11 +51,11 @@ const LyricDialog: React.FC<{ props: SongProps }> = ({ props }) => {
             <div className="flex flex-col items-start">
               <DialogTitle className="text-primary text-base line-clamp-1 text-start mb-2">
                 {props.title}
-              </DialogTitle> 
-                <div className="flex flex-col gap-2 items-start text-muted-foreground">
-                  <p className="text-xs font-medium">{props.artistName}</p>
-                  <p className="text-xs font-medium">{props.releaseDate}</p>
-                </div>
+              </DialogTitle>
+              <div className="flex flex-col gap-2 items-start text-muted-foreground">
+                <p className="text-xs font-medium">{props.artistName}</p>
+                <p className="text-xs font-medium">{props.releaseDate}</p>
+              </div>
             </div>
           </div>
         </DialogHeader>
