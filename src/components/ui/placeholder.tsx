@@ -34,7 +34,7 @@ export function PlaceholdersAndVanishInput({
     if (!inputRef.current) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", {willReadFrequently : true});
     if (!ctx) return;
 
     canvas.width = 800;
@@ -170,6 +170,7 @@ export function PlaceholdersAndVanishInput({
           !animating ? "opacity-0" : "opacity-100"
         )}
         ref={canvasRef}
+        
       />
       <input
         onChange={(e) => {
